@@ -8,6 +8,7 @@ Steps to get the application up and running
 -   Create your mysql database and put the details where necessary in the .env file
 -   The Queue_Connection used for this app is 'database' so it's set so.
 -   Set up the Mail Configuration credentials as required.
+-   Run `composer install` to get the vendor files downloaded
 -   Run `php artisan migrate` to migrate the tables
 -   Run `php artisan optimize` to clear caches
 -   Run `php artisan serve` to serve the app on a terminal
