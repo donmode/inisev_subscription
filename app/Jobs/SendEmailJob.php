@@ -66,7 +66,6 @@ class SendEmailJob implements ShouldQueue
         Log::error($this->post->id);
         $subscribers = Subscription::where('website_id', '=', $this->website->id)->with('user')->get();
         foreach ($subscribers as $subscriber) {
-            Log::error($subscriber->id);
             $data = [
                 'subject' => 'New Post Made on ' . $this->website->url,
                 'receiver_email' => $subscriber->user->email,
@@ -75,9 +74,9 @@ class SendEmailJob implements ShouldQueue
                 'website' => $this->website->url,
             ];
             $sent = Mail::to($data['receiver_email'])->send(new NotifyMail($data));
-            // if (!$sent) {
-            Log::info("Mail for subscriber with User Id:  " . $subscriber->user->id . " on post " . $this->post->title . " with Post Id: " . $this->post->id . " not sent successfully");
-            // }
+            if (!$sent) {
+                Log::info("Mail for subscriber with User Id:  " . $subscriber->user->id . " on post " . $this->post->title . " with Post Id: " . $this->post->id . " not sent successfully");
+            }
         }
 
     }
